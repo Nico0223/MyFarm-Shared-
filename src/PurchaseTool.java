@@ -2,24 +2,20 @@ public class PurchaseTool {
     private int cost;
     private double experience;
 
-    public Tools InitializeOrder(ToolList orderList, String request) {
-        int index = orderList.GetIndexTool(request);
+    public void initializeOrder(ToolList orderList, String request) {
+        int index = orderList.getIndexTool(request);
 
         if (index != -1) {
-            this.cost = orderList.CostIndex(index);
-            this.experience = orderList.ExpIndex(index);
-            Tools tool = new Tools();
-            tool.GenerateTool(request);
-            return tool;
+            this.cost = orderList.costIndex(index);
+            this.experience = orderList.expIndex(index);
         }
-        return null;
     }
 
-    public int GetCost() {
+    public int getCost() {
         return this.cost;
     }
 
-    public double GetExp() {
+    public double getExp() {
         return this.experience;
     }
 }

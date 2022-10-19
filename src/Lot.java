@@ -5,26 +5,26 @@ public class Lot {
     private boolean rock;
     //private Seed crop;
 
-    public void PlowTile(){
+    public void plowTile(){
         state = "Plowed";
     }
-    public void WaterPlant(){
+    public void waterPlant(){
         state = "Watered";
     }
-    public void FertilizePlant(){
+    public void fertilizePlant(){
         state = "Fertilized";
     }
-    public void MineRock(){
+    public void mineRock(){
         state = "Unplowed";
     }
-    public void ShovelTile(){
+    public void shovelTile(){
         if (state.equals("Unplowed"))
             System.out.println("Bruh");
 
         state = "Unplowed";
     }
 
-    public String ShowState(){
+    public String showState(){
         return state;
     }
 

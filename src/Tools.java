@@ -1,11 +1,11 @@
 public class Tools {
-    private String toolType = "None";
+    private final String toolType;
 
-    public void GenerateTool(String newTool){
-        this.toolType = newTool;
+    public Tools(String newTool){
+        toolType = newTool;
     }
 
-    public String ShowTool() {
+    public String showTool() {
         return toolType;
     }
 
