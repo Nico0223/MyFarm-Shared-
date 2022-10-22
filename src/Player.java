@@ -1,9 +1,10 @@
 import java.util.*;
 
 public class Player {
-    private double objectCoins = 100;
+    private double objectCoins = 1000;
     private double experience = 0;
     private Tools tool = null;
+    private Registration registration = new Registration();
     private String order;
 
     public void displayInterface(Lot tile){
@@ -13,6 +14,8 @@ public class Player {
             System.out.println("Equipped: None");
         else
             System.out.println("Equipped: " + this.tool.ShowTool());*/
+        System.out.println("Level: " + this.registration.showLevel());
+        System.out.println("Type: " + this.registration.showRegistration());
         System.out.println("Tile State: " + tile.showState());
     }
 
@@ -95,8 +98,15 @@ public class Player {
         tile.plantSeed(seed);
     }
     public void sellHarvest(Lot tile) {
-        this.experience += tile.getExperience();
+        if (tile.harvest() == 0)
+            return;
         this.objectCoins += tile.harvest();
+        this.experience += tile.getExperience();
     }
+
+    public void registration(){
+        this.objectCoins = this.registration.initializeRegistration(new FarmerTypeList(), this.objectCoins);
+    }
+
 
 }
