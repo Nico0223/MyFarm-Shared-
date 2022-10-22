@@ -1,6 +1,6 @@
 public class Seed {
     private final String seedName;
-    private String cropType;
+    private final String cropType;
     private final int seedIndex;
     private int numWatered = 0;
     private int numFertilized = 0;
@@ -8,7 +8,7 @@ public class Seed {
     private boolean withered = false;
     private int harvestTime;
     private final int produce;
-    private final int sellingPrice;
+    private final double sellingPrice;
     private final double expGained;
 
     public Seed(String order){
@@ -33,6 +33,10 @@ public class Seed {
             if (this.numWatered >= seedList.getWaterNeeds(this.seedIndex)){
                 if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex)) {
                     this.harvestable = true;
+                    // if (this.numWatered >= seedList.getWaterNeeds(this.seedIndex) + farmerType.getWaterBonus())
+                    this.numWatered = seedList.getWaterNeeds(this.seedIndex);
+                    // if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex) + farmerType.getFertilizerBonus())
+                    this.numFertilized = seedList.getFertilizerNeeds(this.seedIndex);
                 }
             }
             if (this.numWatered < seedList.getWaterNeeds(this.seedIndex))
@@ -50,9 +54,19 @@ public class Seed {
         }
     }
 
-    public int getTotalPrice(){
+    public double getTotalPrice(){
+        double harvestTotal, waterBonus, fertilizerBonus, finalHarvestPrice;
         System.out.println("You have produced " + this.produce + " " + this.seedName + "(s)");
-        return this.produce * (this.sellingPrice);
+        harvestTotal = this.produce * (this.sellingPrice);
+        waterBonus = harvestTotal * 0.2  * (this.numWatered - 1);
+        fertilizerBonus = harvestTotal * 0.5 * this.numFertilized;
+        finalHarvestPrice = harvestTotal + waterBonus + fertilizerBonus;
+        if (this.cropType.equals("Flower")){
+            finalHarvestPrice *= 1.1;
+        }
+        System.out.println("The total price of " + this.seedName + " is " + finalHarvestPrice);
+        return finalHarvestPrice;
+
     }
     public double getExpGained(){
         return this.expGained;

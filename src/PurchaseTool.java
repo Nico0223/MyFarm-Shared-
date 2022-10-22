@@ -1,5 +1,5 @@
 public class PurchaseTool {
-    private int cost;
+    private double cost;
     private double experience;
 
     public void initializeOrder(ToolList orderList, String request) {
@@ -11,7 +11,7 @@ public class PurchaseTool {
         }
     }
 
-    public int getCost() {
+    public double getCost() {
         return this.cost;
     }
 

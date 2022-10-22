@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Player {
-    private int objectCoins = 100;
+    private double objectCoins = 100;
     private double experience = 0;
     private Tools tool = null;
     private String order;
@@ -51,9 +51,28 @@ public class Player {
     public void useTool(Lot tile){
         switch (this.tool.showTool()) {
             case "Plow" -> tile.plowTile();
-            case "Watering Can" -> tile.waterPlant();
-            case "Fertilizer" -> tile.fertilizePlant();
-            case "Pickaxe" -> System.out.println("Bruh");
+            case "Watering Can" -> {
+                if (tile.getCrop() == null){
+                    System.out.println("Dude, plant the tile first!");
+                }
+                else
+                    tile.waterPlant();
+            }
+            case "Fertilizer" -> {
+                if (tile.getCrop() == null){
+                    System.out.println("Dude, plant the tile first!");
+                    this.objectCoins += 10;
+                    this.experience -= 4;
+                }
+               else
+                    tile.fertilizePlant();
+            }
+            case "Pickaxe" -> {
+                System.out.println("Bruh");
+                System.out.println("Here's your refund so STOP BUYING A PICKAXE!");
+                this.objectCoins += 50;
+                this.experience -= 15;
+            }
             case "Shovel" -> tile.shovelTile();
             default -> System.out.println("What the hell is this?!\n");
         }

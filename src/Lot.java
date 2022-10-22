@@ -3,11 +3,12 @@ public class Lot {
     //private int tile;
     private String state = "Unplowed";
     //private boolean rock;
-    private Seed crop;
+    private Seed crop = null;
     private double experience;
 
     public void plowTile(){
-        this.state = "Plowed";
+        if (this.state.equals("Unplowed"))
+            this.state = "Plowed";
     }
     public void plantSeed(Seed seed){
         this.crop = seed;
@@ -43,10 +44,11 @@ public class Lot {
             System.out.println("Bruh");
 
         this.state = "Unplowed";
+        this.crop = null;
     }
-    public int harvest(){
+    public double harvest(){
         if (this.state.equals("Ready to harvest")){
-            int total = this.crop.getTotalPrice();
+            double total = this.crop.getTotalPrice();
             System.out.println("Earned " + total + " objectcoins");
             this.crop = null;
             this.state = "Unplowed";
@@ -65,6 +67,9 @@ public class Lot {
 
     public String showState(){
         return this.state;
+    }
+    public Seed getCrop(){
+        return this.crop;
     }
 
 }

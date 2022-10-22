@@ -1,5 +1,5 @@
 public class PurchaseSeed {
-    private int seedCost;
+    private double seedCost;
 
     public int initializeOrder(SeedList seedList, String request){
         int index = seedList.getIndexSeed(request);
@@ -8,7 +8,7 @@ public class PurchaseSeed {
             this.seedCost = seedList.getCost(index);
         return index;
     }
-    public int getCost(){
+    public double getCost(){
         return this.seedCost;
     }
 }

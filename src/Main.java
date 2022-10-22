@@ -4,10 +4,9 @@ public class Main {
     public static void main(String[] args) {
         Player player = new Player();
         Lot tile = new Lot();
-        PurchaseTool orderTool = new PurchaseTool();
-        PurchaseSeed purchaseSeed = new PurchaseSeed();
+        PurchaseTool orderTool;
+        PurchaseSeed purchaseSeed;
         boolean flag = true;
-        int i;
         while (flag){
             player.displayInterface(tile);
             String order;
@@ -15,9 +14,9 @@ public class Main {
             switch (order) {
                 case "Seed" -> {
                     if (tile.showState().equals("Plowed")){
+                        purchaseSeed = new PurchaseSeed();
                         order = player.inputSeed();
-                        i = player.buySeed(purchaseSeed, order);
-                        if (i != -1) {
+                        if (player.buySeed(purchaseSeed, order) != -1) {
                             Seed seed = new Seed(order);
                             player.plantSeed(tile, seed);
                         }
@@ -35,8 +34,8 @@ public class Main {
                 case "Harvest" -> player.sellHarvest(tile);
                 case "Forfeit" -> flag = false;
                 default -> {
-                    i = player.buyTool(orderTool);
-                    if (i != -1){
+                    orderTool = new PurchaseTool();
+                    if (player.buyTool(orderTool) != -1){
                         Tools tool = new Tools(order);
                         player.equipTool(tool);
                         player.useTool(tile);
