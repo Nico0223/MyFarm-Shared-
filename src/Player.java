@@ -32,11 +32,16 @@ public class Player {
     }
 
 
-    public void buyTool(PurchaseTool orderTool) {
+    public int buyTool(PurchaseTool orderTool) {
         ToolList orderList = new ToolList();
         orderTool.initializeOrder(orderList, this.order);
+        if (this.objectCoins < orderTool.getCost()){
+            System.out.println("Hah, you broke!!");
+            return -1;
+        }
         objectCoins = objectCoins - orderTool.getCost();
         experience = experience + orderTool.getExp();
+        return 1;
     }
 
     public void equipTool(Tools tool){
@@ -58,8 +63,13 @@ public class Player {
     public int buySeed(PurchaseSeed purchaseSeed, String order) {
         SeedList seedList = new SeedList();
         int i = purchaseSeed.initializeOrder(seedList, order);
-        if (i != -1)
+        if (i != -1){
+            if (this.objectCoins < purchaseSeed.getCost()){
+                System.out.println("Hah, you broke!!");
+                return -1;
+            }
             this.objectCoins -= purchaseSeed.getCost();
+        }
         return i;
     }
     public void plantSeed(Lot tile, Seed seed) {

@@ -9,7 +9,7 @@ public class SeedList {
     private final int[] fertilizerNeeds = {0, 0, 1, 0, 0, 1, 4 , 5};
     private final int[] minProduced = {1, 1, 1, 1, 1, 1, 5, 10};
     private final int[] maxProduced = {2, 2, 10, 1, 1, 1, 15, 15};
-    private final int[] seedCost = {5, 10, 20, 5, 100, 200};
+    private final int[] seedCost = {5, 10, 20, 5, 10, 20, 100, 200};
     private final int[] sellingPrice = {6, 9, 3, 5, 9, 19, 8, 5};
     private final double[] expGained = {5, 7.5 , 12.5, 2.5, 5, 7.5, 25, 25};
 

@@ -33,11 +33,14 @@ public class Main {
                         flag = false;
                 }
                 case "Harvest" -> player.sellHarvest(tile);
+                case "Forfeit" -> flag = false;
                 default -> {
-                    player.buyTool(orderTool);
-                    Tools tool = new Tools(order);
-                    player.equipTool(tool);
-                    player.useTool(tile);
+                    i = player.buyTool(orderTool);
+                    if (i != -1){
+                        Tools tool = new Tools(order);
+                        player.equipTool(tool);
+                        player.useTool(tile);
+                    }
                 }
             }
         }

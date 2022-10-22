@@ -28,10 +28,12 @@ public class Lot {
     public void waterPlant(){
         System.out.println("Watered");
         this.crop.addWater();
+        this.crop.checkCondition(new SeedList());
     }
     public void fertilizePlant(){
         System.out.println("Fertilized");
         this.crop.addFertilizer();
+        this.crop.checkCondition(new SeedList());
     }
     /*public void mineRock(){
         this.state = "Unplowed";

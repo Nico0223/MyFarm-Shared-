@@ -34,14 +34,13 @@ public class Seed {
                 if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex)) {
                     this.harvestable = true;
                 }
-                else
-                    System.out.println("I need nutrients. Gimme " +
-                            (seedList.getFertilizerNeeds(this.seedIndex) - this.numFertilized) + " Fertilizers");
             }
-            else {
+            if (this.numWatered < seedList.getWaterNeeds(this.seedIndex))
                 System.out.println("I need water. Gimme " + (seedList.getWaterNeeds(this.seedIndex) - this.numWatered)
-                                    + " waters");
-            }
+                        + " waters");
+            if (this.numFertilized < seedList.getFertilizerNeeds(this.seedIndex))
+                System.out.println("I need nutrients. Gimme " +
+                        (seedList.getFertilizerNeeds(this.seedIndex) - this.numFertilized) + " Fertilizers");
         }
         if (this.harvestTime <= 0){
             if (!harvestable)
