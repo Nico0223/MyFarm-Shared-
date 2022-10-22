@@ -1,23 +1,47 @@
-import java.util.*;
+
 
 public class Main {
-    static Lot tile = new Lot();
-
-
-
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         Player player = new Player();
-        player.displayInterface(tile);
-        System.out.print("\nWhat tool do you want to use: ");
-        String order = sc.nextLine();
-        System.out.println("You ordered " + order + ".");
+        Lot tile = new Lot();
         PurchaseTool orderTool = new PurchaseTool();
-        player.buyTool(orderTool, order);
-        Tools tool = new Tools(order);
-        player.equipTool(tool);
-        player.useTool(tile);
+        PurchaseSeed purchaseSeed = new PurchaseSeed();
+        boolean flag = true;
+        int i;
+        while (flag){
+            player.displayInterface(tile);
+            String order;
+            order = player.inputPlayer();
+            switch (order) {
+                case "Seed" -> {
+                    if (tile.showState().equals("Plowed")){
+                        order = player.inputSeed();
+                        i = player.buySeed(purchaseSeed, order);
+                        if (i != -1) {
+                            Seed seed = new Seed(order);
+                            player.plantSeed(tile, seed);
+                        }
+                        else
+                            System.out.println("Sorry, we don't have that seed");
+                    }
+                    else
+                        System.out.println("Dude, plow the tile first!");
+                }
+                case "Bed" -> {
+                    tile.leaveLot();
+                    if (tile.showState().equals("Withered"))
+                        flag = false;
+                }
+                case "Harvest" -> player.sellHarvest(tile);
+                default -> {
+                    player.buyTool(orderTool);
+                    Tools tool = new Tools(order);
+                    player.equipTool(tool);
+                    player.useTool(tile);
+                }
+            }
+        }
+        System.out.println("Congratulations, you lost the game!");
         player.displayInterface(tile);
-
     }
 }
