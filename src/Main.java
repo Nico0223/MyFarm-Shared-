@@ -16,7 +16,7 @@ public class Main {
                     if (tile.showState().equals("Plowed")){
                         purchaseSeed = new PurchaseSeed();
                         order = player.inputSeed();
-                        if (player.buySeed(purchaseSeed, order) != -1) {
+                        if (player.buySeed(purchaseSeed) != -1) {
                             Seed seed = new Seed(order);
                             player.plantSeed(tile, seed);
                         }
@@ -33,6 +33,7 @@ public class Main {
                 }
                 case "Harvest" -> player.sellHarvest(tile);
                 case "Forfeit" -> flag = false;
+                case "Register" -> player.registration();
                 default -> {
                     orderTool = new PurchaseTool();
                     if (player.buyTool(orderTool) != -1){
@@ -42,6 +43,7 @@ public class Main {
                     }
                 }
             }
+            player.updateLevel();
         }
         System.out.println("Congratulations, you lost the game!");
         player.displayInterface(tile);

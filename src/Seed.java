@@ -3,12 +3,15 @@ public class Seed {
     private final String cropType;
     private final int seedIndex;
     private int numWatered = 0;
+    private int waterBonus;
     private int numFertilized = 0;
+    private int fertilizerBonus;
     private boolean harvestable = false;
     private boolean withered = false;
     private int harvestTime;
     private final int produce;
     private final double sellingPrice;
+    private double farmerTypeEarningBonus;
     private final double expGained;
 
     public Seed(String order){
@@ -27,16 +30,25 @@ public class Seed {
     public int showHarvestTime(){
         return this.harvestTime;
     }
+    public void addBonus(Player player){
+      this.waterBonus = player.getWaterBonus();
+      this.fertilizerBonus = player.getFertilizerBonus();
+      this.farmerTypeEarningBonus = player.getBonusEarning();
+    }
 
     public void checkCondition(SeedList seedList){
         if (this.harvestTime >= 0 && !this.withered) {
             if (this.numWatered >= seedList.getWaterNeeds(this.seedIndex)){
                 if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex)) {
                     this.harvestable = true;
-                    // if (this.numWatered >= seedList.getWaterNeeds(this.seedIndex) + farmerType.getWaterBonus())
-                    this.numWatered = seedList.getWaterNeeds(this.seedIndex);
-                    // if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex) + farmerType.getFertilizerBonus())
-                    this.numFertilized = seedList.getFertilizerNeeds(this.seedIndex);
+                    if (this.numWatered >= seedList.getWaterNeeds(this.seedIndex) + this.waterBonus){
+                      System.out.println("Enough enough, I am refreshed already!");
+                      this.numWatered = seedList.getWaterNeeds(this.seedIndex) + this.waterBonus;
+                    }
+                    if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex) + this.fertilizerBonus){
+                      System.out.println("Enough, enough, I am strong and healthy now!");
+                      this.numFertilized = seedList.getFertilizerNeeds(this.seedIndex);
+                    }
                 }
             }
             if (this.numWatered < seedList.getWaterNeeds(this.seedIndex))
@@ -57,7 +69,7 @@ public class Seed {
     public double getTotalPrice(){
         double harvestTotal, waterBonus, fertilizerBonus, finalHarvestPrice;
         System.out.println("You have produced " + this.produce + " " + this.seedName + "(s)");
-        harvestTotal = this.produce * (this.sellingPrice);
+        harvestTotal = this.produce * (this.sellingPrice + this.farmerTypeEarningBonus);
         waterBonus = harvestTotal * 0.2  * (this.numWatered - 1);
         fertilizerBonus = harvestTotal * 0.5 * this.numFertilized;
         finalHarvestPrice = harvestTotal + waterBonus + fertilizerBonus;
