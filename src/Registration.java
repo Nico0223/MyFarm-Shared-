@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Registration {
     private String farmerType = "Farmer";
     private int index = 0;
-    private int level = 0;
+    private int level = 10;
     private double bonusEarning = 0;
     private double costReduction = 0;
     private int waterBonus = 0;
@@ -32,10 +32,8 @@ public class Registration {
             System.out.println("Please choose your type: ");
             Scanner sc = new Scanner(System.in);
             String request = sc.nextLine();
-            if (request.equals("Leave")){
-              //sc.close();
-              return objectCoins;
-            }
+            if (request.equals("Leave"))
+                return objectCoins;
             i = farmerTypeList.getIndexFarmerType(request);
             if (i == -1){
                 System.out.println("What?");
@@ -57,7 +55,6 @@ public class Registration {
                 this.waterBonus = farmerTypeList.getWaterBonus(this.index);
                 this.fertilizerBonus = farmerTypeList.getFertilizerBonus(this.index);
                 System.out.println("Congratulation, You become a " + this.farmerType + "!!");
-                //sc.close();
                 return objectCoins - farmerTypeList.getRegistrationFee(this.index);
             }
         }
@@ -65,12 +62,7 @@ public class Registration {
 
 
     public void levelUp(double experience){
-        int previousLevel = this.level;
         this.level = (int) (experience / 100);
-        while (previousLevel != this.level){
-          System.out.println("Leveled up!");
-          previousLevel++;
-        }
     }
 
     public int showLevel(){
@@ -84,7 +76,8 @@ public class Registration {
     public double getBonusEarning(){
         return this.bonusEarning;
     }
-      public int getWaterBonus(){
+
+    public int getWaterBonus(){
         return this.waterBonus;
     }
 

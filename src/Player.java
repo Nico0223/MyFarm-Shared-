@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class Player {
-    private double objectCoins = 100; // Lines 4-9, initialize variables for the "Player" Class
-    private double experience = 90;
+    private double objectCoins = 1000;
+    private double experience = 0;
     private Tools tool = null;
     private Registration registration = new Registration();
     private String order;
@@ -55,7 +55,7 @@ public class Player {
             System.out.println("Equipped: None");
         else
             System.out.println("Equipped: " + this.tool.ShowTool());*/
-    System.out.println("Level: " + this.registration.showLevel());
+        System.out.println("Level: " + this.registration.showLevel());
         System.out.println("Type: " + this.registration.showRegistration());
         System.out.println("Tile State: " + tile.showState());
     }
@@ -140,27 +140,16 @@ public class Player {
     public void plantSeed(Lot tile, Seed seed) { // This method initializes on planting the seed on the tile
         tile.plantSeed(seed);
     }
-    public void sellHarvest(Lot tile) { // This method initializes on selling the harvested crops
-        this.experience += tile.getExperience(); // experience gets added by the experiencegained from the harvest tile
-        this.objectCoins += tile.harvest(); // objectCoins gets added by the objectCoins from the harvest tile
-    }
-    public void registration(){ // This method initializes showing the information on current farmer registration
-        this.objectCoins = this.registration.initializeRegistration(new FarmerTypeList(), this.objectCoins);
-    }
-    public Registration showRegistration(){ // returns the value of registration
-      return this.registration;
-    }
-    public int getWaterBonus(){ // returns the value of WaterBonus from the registration object
-        return this.registration.getWaterBonus();
+    public void sellHarvest(Lot tile) {
+        if (tile.harvest() == 0)
+            return;
+        this.objectCoins += tile.harvest();
+        this.experience += tile.getExperience();
     }
 
-    public int getFertilizerBonus(){ //  returns te value of the FertilizerBonus from registration object
-        return this.registration.getFertilizerBonus();
+    public void registration(){
+        this.objectCoins = this.registration.initializeRegistration(new FarmerTypeList(), this.objectCoins);
     }
-    public double getBonusEarning(){ // returns the value of the BonusEarning from the registration object
-      return this.registration.getBonusEarning();
-    }
-    public void updateLevel(){
-      this.registration.levelUp(this.experience);
-    }
+
+
 }

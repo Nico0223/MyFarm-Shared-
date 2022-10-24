@@ -32,6 +32,7 @@ public class Main {
                         flag = false;
                 }
                 case "Harvest" -> player.sellHarvest(tile);
+                case "Register" -> player.registration();
                 case "Forfeit" -> flag = false;
                 case "Register" -> player.registration();
                 default -> {
