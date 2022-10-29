@@ -41,22 +41,24 @@ public class Seed {
             if (this.numWatered >= seedList.getWaterNeeds(this.seedIndex)){
                 if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex)) {
                     this.harvestable = true;
-                    if (this.numWatered >= seedList.getWaterNeeds(this.seedIndex) + this.waterBonus){
-                      System.out.println("Enough enough, I am refreshed already!");
-                      this.numWatered = seedList.getWaterNeeds(this.seedIndex) + this.waterBonus;
-                    }
-                    if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex) + this.fertilizerBonus){
-                      System.out.println("Enough, enough, I am strong and healthy now!");
-                      this.numFertilized = seedList.getFertilizerNeeds(this.seedIndex);
-                    }
                 }
             }
+
             if (this.numWatered < seedList.getWaterNeeds(this.seedIndex))
                 System.out.println("I need water. Gimme " + (seedList.getWaterNeeds(this.seedIndex) - this.numWatered)
                         + " waters");
+            else if (this.numWatered >= seedList.getWaterNeeds(this.seedIndex) + this.waterBonus){
+                System.out.println("Enough enough, I am refreshed already!");
+                this.numWatered = seedList.getWaterNeeds(this.seedIndex) + this.waterBonus;
+            }
+
             if (this.numFertilized < seedList.getFertilizerNeeds(this.seedIndex))
                 System.out.println("I need nutrients. Gimme " +
                         (seedList.getFertilizerNeeds(this.seedIndex) - this.numFertilized) + " Fertilizers");
+            else if (this.numFertilized >= seedList.getFertilizerNeeds(this.seedIndex) + this.fertilizerBonus){
+                System.out.println("Enough, enough, I am strong and healthy now!");
+                this.numFertilized = seedList.getFertilizerNeeds(this.seedIndex);
+            }
         }
         if (this.harvestTime <= 0){
             if (!harvestable)

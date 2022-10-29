@@ -1,71 +1,46 @@
 import java.util.*;
 
 public class Player {
-    private double objectCoins = 1000;
+    private double objectCoins = 100;
     private double experience = 0;
     private Tools tool = null;
-    private Registration registration = new Registration();
+    private final Registration registration = new Registration();
     private String order;
-    private Boolean gameEnd;
+    private Boolean gameEnd = false;
 
-    public double getObjectCoins() { // returns the value of objectCoins
-		return objectCoins;
-	}
 
-	public void setObjectCoins(double objectCoins) { // sets the value of objectCoins
-		this.objectCoins = objectCoins;
-	}
-
-	public double getExperience() { // returns the value of experience
-		return experience;
-	}
-
-	public void setExperience(double experience) { // sets the value of experience
-		this.experience = experience;
-	}
-
-	public Tools getTool() { // returns the value of tool
-		return tool;
-	}
-
-	public void setTool(Tools tool) { // sets the value of tool
-		this.tool = tool;
-	}
-
-	public String getOrder() { // returns the value of order
-		return order;
-	}
-
-	public void setOrder(String order) { //  sets the value of experience
-		this.order = order;
-	}
-
-	public Boolean getGameEnd() { //  returns the value of gameEnd
+    public Boolean getGameEnd() { //  returns the value of gameEnd
 		return gameEnd;
 	}
 
-	public void setGameEnd(Boolean gameEnd) { // sets the value of gameEnd
-		this.gameEnd = gameEnd;
+	public void setGameEnd() { // sets the value of gameEnd
+		this.gameEnd = true;
 	}
 
 	public void displayInterface(Lot tile){ //this method displays the farm information in terms of objectCoins, experience and Registration level and the farm tiles.
         System.out.println("Objectcoins: " + this.objectCoins);
         System.out.println("Experience: " + this.experience);
-        /*if (tool == null)
-            System.out.println("Equipped: None");
-        else
-            System.out.println("Equipped: " + this.tool.ShowTool());*/
         System.out.println("Level: " + this.registration.showLevel());
         System.out.println("Type: " + this.registration.showRegistration());
         System.out.println("Tile State: " + tile.showState());
+        if (this.objectCoins < 5 && tile.getCrop() == null){
+            System.out.println("You have filed Chapter 11 Bankruptcy");
+            this.gameEnd = true;
+        }
+        if (tile.getCrop() != null){
+            tile.updateBonus(this);
+        }
+
     }
 
     public String inputPlayer(){ // asks input from the user for their order
+        if (this.gameEnd)
+            return "Forfeit";
         Scanner sc = new Scanner(System.in);
         System.out.print("\nWhat do you order? ");
         this.order = sc.nextLine();
         System.out.println("You ordered " + order + ".");
-        //sc.close();
+
         return this.order;
     }
     public String inputSeed(){ // this method asks input from the user on the type of seed to order
@@ -78,14 +53,15 @@ public class Player {
     }
 
 
-    public int buyTool(PurchaseTool orderTool) { // this method is initialize buying the tool that the user orders
+    public int buyTool(PurchaseTool orderTool) { // this method is initialized buying the tool that the user orders
         ToolList orderList = new ToolList(); // Instantiate the orderlist object with a ToolList class
         orderTool.initializeOrder(orderList, this.order);
+
         if (this.objectCoins < orderTool.getCost()){ // an if-statement to indicate if the objectCoins is less than the cost of the selected tool
             System.out.println("Hah, you broke!!");
             return -1; 
         }
-        objectCoins = objectCoins - orderTool.getCost(); // objectCoins gets subtracted to the cost of the orderTool
+        objectCoins = objectCoins - orderTool.getCost() + registration.getCostReduction(); // objectCoins gets subtracted to the cost of the orderTool
         experience = experience + orderTool.getExp(); // user gains experience based on the orderTool
         return 1;
     }
@@ -122,6 +98,7 @@ public class Player {
             case "Shovel" -> tile.shovelTile(); // If using the "Shovel" tool
             default -> System.out.println("What the hell is this?!\n");
         }
+        registration.levelUp(this.experience);
         tool = null; // tool gets removed and set to null after use
     }
 
@@ -139,16 +116,34 @@ public class Player {
     }
     public void plantSeed(Lot tile, Seed seed) { // This method initializes on planting the seed on the tile
         tile.plantSeed(seed);
+
     }
     public void sellHarvest(Lot tile) {
-        if (tile.harvest() == 0)
+        double temp = tile.harvest();
+        if (temp == 0){
+            System.out.println("This plant is too young to harvest");
             return;
-        this.objectCoins += tile.harvest();
+        }
+        this.objectCoins += temp;
         this.experience += tile.getExperience();
+        System.out.println("You have gained " + tile.getExperience() + " experiences");
+        registration.levelUp(this.experience);
     }
 
     public void registration(){
         this.objectCoins = this.registration.initializeRegistration(new FarmerTypeList(), this.objectCoins);
+    }
+
+    public int getWaterBonus(){
+        return registration.getWaterBonus();
+    }
+
+    public int getFertilizerBonus(){
+        return registration.getFertilizerBonus();
+    }
+
+    public double getBonusEarning(){
+        return registration.getBonusEarning();
     }
 
 

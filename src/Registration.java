@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class Registration {
     private String farmerType = "Farmer";
     private int index = 0;
-    private int level = 10;
+    private int level = 0;
     private double bonusEarning = 0;
     private double costReduction = 0;
     private int waterBonus = 0;
@@ -14,6 +14,7 @@ public class Registration {
     }
 
     public double initializeRegistration(FarmerTypeList farmerTypeList, double objectCoins){
+        System.out.println("ObjectCoins: " + objectCoins);
         System.out.println("Welcome to Farmer Registration");
         while(true){
             System.out.println("Here are the available Farmer Types:");
@@ -62,7 +63,12 @@ public class Registration {
 
 
     public void levelUp(double experience){
+        int temp = this.level;
         this.level = (int) (experience / 100);
+        while (temp < this.level){
+            System.out.println("Level Up!");
+            temp++;
+        }
     }
 
     public int showLevel(){

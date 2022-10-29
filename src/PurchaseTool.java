@@ -8,6 +8,8 @@ public class PurchaseTool {
         if (index != -1) {
             this.cost = orderList.costIndex(index);
             this.experience = orderList.expIndex(index);
+            System.out.println("You have spent " + this.cost + " ObjectCoins");
+            System.out.println("You have gained " + this.experience + " experiences");
         }
     }
 

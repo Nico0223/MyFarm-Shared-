@@ -1,7 +1,7 @@
 import java.util.Random;
 
 public class SeedList {
-    private final String[] seedName = {"Turnip", "Carrot", "Potato", "Rose", "Turnips", "Sunflower", "Mango", "Apple"};
+    private final String[] seedName = {"Turnip", "Carrot", "Potato", "Rose", "Tulips", "Sunflower", "Mango", "Apple"};
     private final String[] cropType = {"Root crop", "Root crop", "Root crop", "Flower", "Flower", "Flower",
                                        "Fruit tree", "Fruit tree"};
     private final int[] harvestTime = {2, 3, 5, 1, 2, 3, 10, 10};

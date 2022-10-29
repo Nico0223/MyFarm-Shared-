@@ -6,8 +6,7 @@ public class Main {
         Lot tile = new Lot();
         PurchaseTool orderTool;
         PurchaseSeed purchaseSeed;
-        boolean flag = true;
-        while (flag){
+        while (!player.getGameEnd()){
             player.displayInterface(tile);
             String order;
             order = player.inputPlayer();
@@ -27,14 +26,14 @@ public class Main {
                         System.out.println("Dude, plow the tile first!");
                 }
                 case "Bed" -> {
-                    tile.leaveLot();
+                    if (tile.getCrop() != null)
+                        tile.leaveLot();
                     if (tile.showState().equals("Withered"))
-                        flag = false;
+                        player.setGameEnd();
                 }
                 case "Harvest" -> player.sellHarvest(tile);
                 case "Register" -> player.registration();
-                case "Forfeit" -> flag = false;
-                case "Register" -> player.registration();
+                case "Forfeit" -> player.setGameEnd();
                 default -> {
                     orderTool = new PurchaseTool();
                     if (player.buyTool(orderTool) != -1){
@@ -44,7 +43,6 @@ public class Main {
                     }
                 }
             }
-            player.updateLevel();
         }
         System.out.println("Congratulations, you lost the game!");
         player.displayInterface(tile);

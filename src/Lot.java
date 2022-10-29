@@ -15,7 +15,7 @@ public class Lot {
         this.crop = seed; // the seed will then become a "crop"
         experience = this.crop.getExpGained(); // user gains experience based on the crop planted
         this.state = this.crop.showName() + " - " + this.crop.showHarvestTime() + " days left"; // informs the user on the state of the tile by crop name and days left to harvest
-        crop.checkCondition(new SeedList()); // checks the condition of the seed whether it has been watered and fertilized 
+        crop.checkCondition(new SeedList()); // checks the condition of the seed whether it has been watered and fertilized
     }
     public void leaveLot(){ // This method initializes to advance the day of the farm
         crop.grow();
@@ -47,6 +47,10 @@ public class Lot {
         this.state = "Unplowed"; // state of the plow is now "unplowed"
         this.crop = null; // there is no longer a crop on the tile
     }
+
+    public void updateBonus(Player player){
+        crop.addBonus(player);
+    }
     public double harvest(){ // this method initializes for the user onharvesting the crop
         if (this.state.equals("Ready to harvest")){ // if the state of the tile is considered ready to harvest
             double total = this.crop.getTotalPrice(); // the variable total gets the total price of the crops harvested
@@ -56,10 +60,10 @@ public class Lot {
             return total; // returns total objectCoins acquired
         }
 
-        else if (this.state.equals("Withered")) // if the state of the tile is "withered"
+        if (this.state.equals("Withered")) // if the state of the tile is "withered"
             System.out.println("Use the shovel to remove the withered plant"); // tells the user to use a shover to remove the plant
-        else 
-            System.out.println("This plant is too young to harvest");
+        else
+            System.out.println("If you see this, there is a bug in my pc");
         return 0;
     }
     public double getExperience(){ // returns the value of experience
@@ -72,5 +76,7 @@ public class Lot {
     public Seed getCrop(){ // returns the value on the crop planted on the tile
         return this.crop;
     }
+
+
 
 }
