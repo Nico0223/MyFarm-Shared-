@@ -1,19 +1,19 @@
 import java.util.*;
-
+// This class initializes the player in doing various tasks within the farm, which includes buying/selling seeds, using tools,  getting farmer registration, plowing, planting, fertilizing, and watering plants
 public class Player {
-    private double objectCoins = 100;
-    private double experience = 0;
-    private Tools tool = null;
-    private final Registration registration = new Registration();
-    private String order;
-    private Boolean gameEnd = false;
+    private double objectCoins = 100; // default objectcoins are set to 100
+    private double experience = 0; // default experience is set to 0
+    private Tools tool = null; // default tool being used is "none"
+    private final Registration registration = new Registration(); // default registration is set to 0
+    private String order; // the order of the farmer
+    private Boolean gameEnd = false; // the gameEnd is set to false as default
 
 
     public Boolean getGameEnd() { //  returns the value of gameEnd
 		return gameEnd;
 	}
 
-	public void setGameEnd() { // sets the value of gameEnd
+	  public void setGameEnd() { // sets the value of gameEnd
 		this.gameEnd = true;
 	}
 
@@ -24,11 +24,11 @@ public class Player {
         System.out.println("Type: " + this.registration.showRegistration());
         System.out.println("Tile State: " + tile.showState());
         if (this.objectCoins < 5 && tile.getCrop() == null){
-            System.out.println("You have filed Chapter 11 Bankruptcy");
-            this.gameEnd = true;
+            System.out.println("You have filed Chapter 11 Bankruptcy"); // If the farmer has less than 5 objectCoins and no crops on the tile
+            this.gameEnd = true; // gameEnd will be set to "true"
         }
-        if (tile.getCrop() != null){
-            tile.updateBonus(this);
+        if (tile.getCrop() != null){ // if there is a crop on the tile
+            tile.updateBonus(this); // adds bonus to the tile
         }
 
     }
@@ -53,7 +53,7 @@ public class Player {
     }
 
 
-    public int buyTool(PurchaseTool orderTool) { // this method is initialized buying the tool that the user orders
+    public int buyTool(PurchaseTool orderTool) { // this method is initializes buying the tool that the user orders
         ToolList orderList = new ToolList(); // Instantiate the orderlist object with a ToolList class
         orderTool.initializeOrder(orderList, this.order);
 
@@ -114,35 +114,35 @@ public class Player {
         }
         return i;
     }
-    public void plantSeed(Lot tile, Seed seed) { // This method initializes on planting the seed on the tile
+    /*public void plantSeed(Lot tile, Seed seed) { // This method initializes on planting the seed on the tile
         tile.plantSeed(seed);
 
-    }
-    public void sellHarvest(Lot tile) {
-        double temp = tile.harvest();
-        if (temp == 0){
+    }*/
+    public void sellHarvest(Lot tile) { // initializes the player selling the harvested crop on the tile
+        double temp = tile.harvest(); // passes the value of the price of the harvested crop
+        if (temp == 0){ // if temp is 0 or there is no value on the price of the harvested price
             System.out.println("This plant is too young to harvest");
             return;
         }
-        this.objectCoins += temp;
-        this.experience += tile.getExperience();
+        this.objectCoins += temp; // objectCoins gets added by temp
+        this.experience += tile.getExperience(); // experience gets added by the experience of harvesting the tile
         System.out.println("You have gained " + tile.getExperience() + " experiences");
         registration.levelUp(this.experience);
     }
 
-    public void registration(){
+    public void register(){ // registers the user for the succeeding registration, the objectCoins will be updated
         this.objectCoins = this.registration.initializeRegistration(new FarmerTypeList(), this.objectCoins);
     }
 
-    public int getWaterBonus(){
+    public int getWaterBonus(){ // a getter for the WaterBonus
         return registration.getWaterBonus();
     }
 
-    public int getFertilizerBonus(){
+    public int getFertilizerBonus(){ // a getter for the FertilizerBonus
         return registration.getFertilizerBonus();
     }
 
-    public double getBonusEarning(){
+    public double getBonusEarning(){ // a getter for the BonusEarning
         return registration.getBonusEarning();
     }
 

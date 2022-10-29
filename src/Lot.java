@@ -51,7 +51,7 @@ public class Lot {
     public void updateBonus(Player player){
         crop.addBonus(player);
     }
-    public double harvest(){ // this method initializes for the user onharvesting the crop
+    public double harvest(){ // this method initializes for the user on harvesting the crop
         if (this.state.equals("Ready to harvest")){ // if the state of the tile is considered ready to harvest
             double total = this.crop.getTotalPrice(); // the variable total gets the total price of the crops harvested
             System.out.println("Earned " + total + " objectcoins"); // shows the user how much objectCoins acquired
