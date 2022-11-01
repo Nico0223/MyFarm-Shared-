@@ -34,7 +34,7 @@ public class SeedList { // The class initializes on the list of seeds that the f
     }
     public int getProduced(int index){ // a getter for the number of products produced from the seed
         Random randomGenerator = new Random(); // initializes a random number generator for the number of products produced
-        if (this.cropType[index].equals("Flower")) // if the croptype is a "Flower"
+        if (this.cropType[index].equals("Flower")) // if the cropType is a "Flower"
             return this.minProduced[index]; // returns the minimum production of the crop
         return randomGenerator.nextInt(this.minProduced[index], this.maxProduced[index]); // generates a random number based on minimum and maximum number of the crop produced
     }

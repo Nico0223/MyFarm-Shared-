@@ -7,7 +7,7 @@ public class FarmerTypeList { // The class that initializes the farmer type list
     private final double[] registrationFee = {0, 200, 300, 400}; // an array of registrationFee correlated with their farmer types
     private final int[] minimumLevel = {0, 5, 10, 15}; // an array of minimumLevel correlated with their farmer types
 
-    public int getIndexFarmerType(String order){ // gets the index of the farmertype based on the arrays
+    public int getIndexFarmerType(String order){ // gets the index of the farmerType based on the arrays
         int i;
         for (i = 0; i < 4; i++){ // use linear search
             if (this.type[i].equals(order))

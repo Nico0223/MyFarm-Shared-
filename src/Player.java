@@ -1,7 +1,7 @@
 import java.util.*;
 // This class initializes the player in doing various tasks within the farm, which includes buying/selling seeds, using tools,  getting farmer registration, plowing, planting, fertilizing, and watering plants
 public class Player {
-    private double objectCoins = 100; // default objectcoins are set to 100
+    private double objectCoins = 100; // default objectCoins are set to 100
     private double experience = 0; // default experience is set to 0
     private Tools tool = null; // default tool being used is "none"
     private final Registration registration = new Registration(); // default registration is set to 0
@@ -13,12 +13,34 @@ public class Player {
 		return gameEnd;
 	}
 
-	  public void setGameEnd() { // sets the value of gameEnd
+    public void setGameEnd() { // sets the value of gameEnd
 		this.gameEnd = true;
 	}
 
+    public boolean checkGame(){
+        if (this.gameEnd){
+            System.out.println("Congratulations, you lost the game!");
+            while (true){
+                System.out.print("Try again? ");
+                Scanner sc = new Scanner(System.in);
+                String answer = sc.nextLine();
+                switch (answer){
+                    case "yes" ->{
+                        this.gameEnd = false;
+                        return true;
+                    }
+                    case "no" -> {
+                        return false;
+                    }
+                }
+            }
+
+        }
+        return false;
+    }
+
 	public void displayInterface(Lot tile){ //this method displays the farm information in terms of objectCoins, experience and Registration level and the farm tiles.
-        System.out.println("Objectcoins: " + this.objectCoins);
+        System.out.println("ObjectCoins: " + this.objectCoins);
         System.out.println("Experience: " + this.experience);
         System.out.println("Level: " + this.registration.showLevel());
         System.out.println("Type: " + this.registration.showRegistration());
@@ -54,7 +76,7 @@ public class Player {
 
 
     public int buyTool(PurchaseTool orderTool) { // this method is initializes buying the tool that the user orders
-        ToolList orderList = new ToolList(); // Instantiate the orderlist object with a ToolList class
+        ToolList orderList = new ToolList(); // Instantiate the orderList object with a ToolList class
         orderTool.initializeOrder(orderList, this.order);
 
         if (this.objectCoins < orderTool.getCost()){ // an if-statement to indicate if the objectCoins is less than the cost of the selected tool
@@ -70,7 +92,7 @@ public class Player {
         this.tool = tool;
     }
 
-    public void useTool(Lot tile){ // this method would change the state of the selected tile with a equipped tool
+    public void useTool(Lot tile){ // this method would change the state of the selected tile with an equipped tool
         switch (this.tool.showTool()) {
             case "Plow" -> tile.plowTile(); // If using the "Plow" tool, it would plow the tile
             case "Watering Can" -> { // if using the "Watering Can" tool
@@ -87,7 +109,7 @@ public class Player {
                     this.experience -= 4; // refund process
                 }
                else
-                    tile.fertilizePlant(); // tile gets fertitlized
+                    tile.fertilizePlant(); // tile gets fertilized
             }
             case "Pickaxe" -> { // If using the "Pickaxe" tool (coming soon)
                 System.out.println("Bruh");
@@ -114,10 +136,6 @@ public class Player {
         }
         return i;
     }
-    /*public void plantSeed(Lot tile, Seed seed) { // This method initializes on planting the seed on the tile
-        tile.plantSeed(seed);
-
-    }*/
     public void sellHarvest(Lot tile) { // initializes the player selling the harvested crop on the tile
         double temp = tile.harvest(); // passes the value of the price of the harvested crop
         if (temp == 0){ // if temp is 0 or there is no value on the price of the harvested price

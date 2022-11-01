@@ -6,14 +6,14 @@ public class PurchaseTool { // This class initializes the player on purchasing t
         int index = orderList.getIndexTool(request); // index of the user's tool to purchase gets passed into the index variable
 
         if (index != -1) { // if the tool to purchase is found
-            this.cost = orderList.costIndex(index); // passes the  the cost of the user's purchasetool to the variable index
-            this.experience = orderList.expIndex(index); // passes the experience value on the user's purchasetool to the variable experience
+            this.cost = orderList.costIndex(index); // passes the cost of the user's purchaseTool to the variable index
+            this.experience = orderList.expIndex(index); // passes the experience value on the user's purchaseTool to the variable experience
             System.out.println("You have spent " + this.cost + " ObjectCoins");
             System.out.println("You have gained " + this.experience + " experiences");
         }
     }
 
-    public double getCost() { // a getter for the cost of the toolto purchase
+    public double getCost() { // a getter for the cost of the selected tool
         return this.cost;
     }
 

@@ -45,7 +45,7 @@ public class Registration { // initializes the registration of the farmer on the
             else if (this.level < farmerTypeList.getMinimumLevel(i)){ // if user chooses to register to a farmer type lower than the minimum level
                 System.out.println("Hey, you're too new to register this!");
             }
-            else if (objectCoins < farmerTypeList.getRegistrationFee(i)){ // if the objectcoins is lower than the registrationfee for that farmer type
+            else if (objectCoins < farmerTypeList.getRegistrationFee(i)){ // if the objectCoins is lower than the registrationFee for that farmer type
                 System.out.println("Not enough ObjectCoins to register");
             }
             else{ // if there is no violation on buying the farmer type
