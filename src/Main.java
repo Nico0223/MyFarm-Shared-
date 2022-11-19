@@ -27,6 +27,7 @@ public class Main { // The Main class for initializing the whole program up unti
         Lot tile = new Lot(); //  instantiate the tile object with the Lot of class.
         PurchaseTool orderTool; // a class-level variable for orderTool
         PurchaseSeed purchaseSeed; // a class-level variable for purchaseSeed
+        player.displayInterface(tile);
         while (!player.getGameEnd()){ // when the getGameEnd is false
             player.displayInterface(tile); // displays the interface or information for the user
             String order; // creates a variable for order
@@ -80,5 +81,8 @@ public class Main { // The Main class for initializing the whole program up unti
  *  certify that we have not copied in part or whole or otherwise plagiarized the work of other students and/or
  *  persons.
  *  Carlos Dominic R. Gonzaga, DLSU ID# 12106402
- *  Jared Zachary M. Ranjo, DLSU ID# 121
+ *  Jared Zachary M. Ranjo, DLSU ID# 12110132
+ *  Sources: https://docs.oracle.com/en/java/javase/12/docs/api/java.base/module-summary.html
+ *           https://www.w3schools.com/java/
+ *           https://www.tutorialspoint.com/java/index.htm
  */

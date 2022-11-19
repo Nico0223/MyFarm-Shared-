@@ -1,5 +1,13 @@
 import java.util.*;
-// This class initializes the player in doing various tasks within the farm, which includes buying/selling seeds, using tools,  getting farmer registration, plowing, planting, fertilizing, and watering plants
+
+/**
+ * This class represents the player that can do various tasks within the farm, which includes buying/selling seeds,
+ * using tools like pickaxe and shovel to clear a tile, getting farmer registration, plowing, planting, fertilizing,
+ * and watering plants. It has objectCoins which is referred to the currency used to purchase tools, seeds, and
+ * registration, experience, tool which is associated to the Tools class, registration which is associated with the
+ * Registration class, order which is referred to the input of action/request the player wants to perform/have, and
+ * gameEnd which determines whether the game ends when the conditions are met.
+ */
 public class Player {
     private double objectCoins = 100; // default objectCoins are set to 100
     private double experience = 0; // default experience is set to 0
@@ -8,15 +16,25 @@ public class Player {
     private String order; // the order of the farmer
     private Boolean gameEnd = false; // the gameEnd is set to false as default
 
-
+    /** A method that returns the value of gameEnd to terminate the loop from the GUI.
+     *
+     * @return the value of gameEnd which is either true or false
+     */
     public Boolean getGameEnd() { //  returns the value of gameEnd
 		return gameEnd;
 	}
 
+    /** A method sets the value of gameEnd to true to end the game by terminating
+     * the loop from the GUI.
+     */
     public void setGameEnd() { // sets the value of gameEnd
 		this.gameEnd = true;
 	}
 
+    /** A method that asks the player whether he wants to try again after he lost the game.
+     *
+     * @return the boolean value
+     */
     public boolean checkGame(){
         if (this.gameEnd){
             System.out.println("Congratulations, you lost the game!");
@@ -39,6 +57,9 @@ public class Player {
         return false;
     }
 
+    // showing interface for MCO1
+    private boolean flag = true;
+    private Seed seed = new Seed("Turnip");
 	public void displayInterface(Lot tile){ //this method displays the farm information in terms of objectCoins, experience and Registration level and the farm tiles.
         System.out.println("ObjectCoins: " + this.objectCoins);
         System.out.println("Experience: " + this.experience);
@@ -51,6 +72,10 @@ public class Player {
         }
         if (tile.getCrop() != null){ // if there is a crop on the tile
             tile.updateBonus(this); // adds bonus to the tile
+        }
+        if (flag){
+            tile.plantSeed(seed);
+            flag = false;
         }
 
     }
@@ -74,8 +99,12 @@ public class Player {
         return this.order;
     }
 
-
-    public int buyTool(PurchaseTool orderTool) { // this method is initializes buying the tool that the user orders
+    /** A method that initializes buying the tool that the user orders.
+     *
+     * @param orderTool where the transaction of buying tools is being held
+     * @return 1 if the transaction is successful and -1 if the transaction is failed
+     */
+    public int buyTool(PurchaseTool orderTool) {
         ToolList orderList = new ToolList(); // Instantiate the orderList object with a ToolList class
         orderTool.initializeOrder(orderList, this.order);
 
@@ -88,11 +117,19 @@ public class Player {
         return 1;
     }
 
-    public void equipTool(Tools tool){ // this method equips the tool that the user will use
+    /** A method that allows the player to equip the tool.
+     *
+     * @param tool the tool that the player will use
+     */
+    public void equipTool(Tools tool){ //
         this.tool = tool;
     }
 
-    public void useTool(Lot tile){ // this method would change the state of the selected tile with an equipped tool
+    /** A method that would change the state of the selected tile with an equipped tool.
+     *
+     * @param tile selected tile
+     */
+    public void useTool(Lot tile){
         switch (this.tool.showTool()) {
             case "Plow" -> tile.plowTile(); // If using the "Plow" tool, it would plow the tile
             case "Watering Can" -> { // if using the "Watering Can" tool
@@ -111,20 +148,22 @@ public class Player {
                else
                     tile.fertilizePlant(); // tile gets fertilized
             }
-            case "Pickaxe" -> { // If using the "Pickaxe" tool (coming soon)
-                System.out.println("Bruh");
-                System.out.println("Here's your refund so STOP BUYING A PICKAXE!");
-                this.objectCoins += 50; // refund process
-                this.experience -= 15; // refund process
+            case "Pickaxe" -> { // If using the "Pickaxe" tool
+               tile.mineRock();
             }
             case "Shovel" -> tile.shovelTile(); // If using the "Shovel" tool
-            default -> System.out.println("What the hell is this?!\n");
+            default -> System.out.println("What the hell is this?!\n"); //legacy line of code from MCO1
         }
         registration.levelUp(this.experience);
         tool = null; // tool gets removed and set to null after use
     }
 
-    public int buySeed(PurchaseSeed purchaseSeed)  { // This method would initialize the user's order for buying seeds
+    /** A method that  would initialize the user's order for buying seeds.
+     *
+     * @param purchaseSeed where a transaction of buying seed is held
+     * @return -1 if the transaction fails and i if the transaction is successful
+     */
+    public int buySeed(PurchaseSeed purchaseSeed)  {
         SeedList seedList = new SeedList(); // initialize the seedList object with the SeedList class
         int i = purchaseSeed.initializeOrder(seedList, this.order); // the variable "i" gets the index of the seedList
         if (i != -1){ // if the index was found
@@ -136,7 +175,12 @@ public class Player {
         }
         return i;
     }
-    public void sellHarvest(Lot tile) { // initializes the player selling the harvested crop on the tile
+
+    /** A method that initializes the player selling the harvested crop on the tile.
+     *
+     * @param tile selected tile
+     */
+    public void sellHarvest(Lot tile) {
         double temp = tile.harvest(); // passes the value of the price of the harvested crop
         if (temp == 0){ // if temp is 0 or there is no value on the price of the harvested price
             System.out.println("This plant is too young to harvest");
@@ -148,20 +192,69 @@ public class Player {
         registration.levelUp(this.experience);
     }
 
-    public void register(){ // registers the user for the succeeding registration, the objectCoins will be updated
+    /** A method that registers the user for the succeeding registration and the objectCoins will be updated.
+     *
+     */
+    public void register(){ //
         this.objectCoins = this.registration.initializeRegistration(new FarmerTypeList(), this.objectCoins);
     }
 
-    public int getWaterBonus(){ // a getter for the WaterBonus
+    /** A getter method for the waterBonus from the registration object.
+     *
+     * @return the extension of water bonus limit for seed object
+     */
+    public int getWaterBonus(){
         return registration.getWaterBonus();
     }
 
-    public int getFertilizerBonus(){ // a getter for the FertilizerBonus
+    /** A getter method for the fertilizerBonus from the registration object.
+     *
+     * @return the extension of fertilizer bonus limit for seed object
+     */
+    public int getFertilizerBonus(){
         return registration.getFertilizerBonus();
     }
 
-    public double getBonusEarning(){ // a getter for the BonusEarning
+    /** A getter method for the bonusEarning from the registration object.
+     *
+     * @return the bonus earnings of selling the harvest
+     */
+    public double getBonusEarning(){
         return registration.getBonusEarning();
+    }
+
+    /** A getter method for the farmerType from the registration object.
+     *
+     * @return the farmer type of the player
+     */
+    public String getFarmerType() {
+        return this.registration.showRegistration();
+    }
+
+    /** A getter method for the level from the registration object.
+     *
+     * @return the level of the player
+     */
+    public int getLevel() {
+        return this.registration.showLevel();
+    }
+
+    //Test code in Player class
+    public static void main(String[] args) {
+        Lot[][] farm = new Lot[5][10];
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                farm[i][j] = new Lot();
+            }
+        }
+        Player player = new Player();
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 10; j++) {
+                player.displayInterface(farm[i][j]);
+            }
+        }
     }
 
 

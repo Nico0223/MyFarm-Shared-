@@ -49,17 +49,20 @@ public class Registration { // initializes the registration of the farmer on the
                 System.out.println("Not enough ObjectCoins to register");
             }
             else{ // if there is no violation on buying the farmer type
-              // Lines 52-63, the effects of the farmer registration takes place on the farmer lot
-                this.index = farmerTypeList.getIndexFarmerType(request);
-                this.farmerType = request;
-                this.bonusEarning = farmerTypeList.getBonusEarning(this.index);
-                this.costReduction = farmerTypeList.getCostReduction(this.index);
-                this.waterBonus = farmerTypeList.getWaterBonus(this.index);
-                this.fertilizerBonus = farmerTypeList.getFertilizerBonus(this.index);
-                System.out.println("Congratulation, You become a " + this.farmerType + "!!");
+                this.updateFarmer(farmerTypeList, request);
                 return objectCoins - farmerTypeList.getRegistrationFee(this.index);
             }
         }
+    }
+    public void updateFarmer(FarmerTypeList farmerTypeList, String request){
+        // Lines 59-65, the effects of the farmer registration takes place on the farmer lot
+        this.index = farmerTypeList.getIndexFarmerType(request);
+        this.farmerType = request;
+        this.bonusEarning = farmerTypeList.getBonusEarning(this.index);
+        this.costReduction = farmerTypeList.getCostReduction(this.index);
+        this.waterBonus = farmerTypeList.getWaterBonus(this.index);
+        this.fertilizerBonus = farmerTypeList.getFertilizerBonus(this.index);
+        System.out.println("Congratulation, You become a " + this.farmerType + "!!");
     }
 
 
@@ -90,6 +93,18 @@ public class Registration { // initializes the registration of the farmer on the
 
     public int getFertilizerBonus(){ // a getter for the FertilizerBonus
         return this.fertilizerBonus;
+    }
+
+    public static void main(String[] args){
+        double objectCoins = 1000;
+        Registration registration = new Registration();
+
+        registration.initializeRegistration(new FarmerTypeList(), objectCoins);
+        System.out.println(registration.showRegistration());
+        System.out.println(registration.getBonusEarning());
+        System.out.println(registration.getCostReduction());
+        System.out.println(registration.getWaterBonus());
+        System.out.println(registration.getFertilizerBonus());
     }
 
 }
