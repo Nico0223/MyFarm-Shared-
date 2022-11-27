@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * This class represents the seed, which has the name of the seed, type of crop, index of seed retrieved from the
  * seedList class, number of times watered and fertilized, bonus limit of watering and fertilizing the plant,
@@ -49,6 +51,10 @@ public class Seed {
      */
     public String showName(){
         return this.seedName;
+    }
+
+    public String showType(){
+        return this.cropType;
     }
 
     /** A method that shows or gets the amount of time left until of the
@@ -127,7 +133,7 @@ public class Seed {
      */
     public String showWaterProgress(SeedList seedList){
         int waterNeeds = seedList.getWaterNeeds(this.seedIndex);
-        String string = "Number of times watered: " + this.numWatered + "/" + waterNeeds;
+        String string = "Times watered: " + this.numWatered + "/" + waterNeeds;
         if (this.numWatered >= waterNeeds){
             if (this.numWatered == waterNeeds)
                 return string.concat(" :)");
@@ -146,7 +152,7 @@ public class Seed {
      */
     public String showFertilizerProgress(SeedList seedList){
         int fertilizerNeeds = seedList.getFertilizerNeeds(this.seedIndex);
-        String string = "Number of times fertilized: " + this.numFertilized + "/" + fertilizerNeeds;
+        String string = "Times fertilized: " + this.numFertilized + "/" + fertilizerNeeds;
         if (this.numFertilized >= fertilizerNeeds){
             if (this.numFertilized == fertilizerNeeds)
                 return string.concat(" :)");
@@ -180,6 +186,8 @@ public class Seed {
         if (this.cropType.equals("Flower")){ // if the cropType is a "Flower"
             finalHarvestPrice *= 1.1; // total price gets multiplied to 1.1
         }
+        new Prompt("You have produced " + this.produce + " " + this.seedName + "(s)\n" + "The total price of " +
+                this.seedName + " is " + finalHarvestPrice);
         System.out.println("The total price of " + this.seedName + " is " + finalHarvestPrice);
         return finalHarvestPrice;
 
@@ -230,9 +238,11 @@ public class Seed {
 
     public static void main(String[] args){
         Seed seed;
-        for (int i = 0; i < 20; i++){
-            seed = new Seed("Tulips");
-            System.out.println(seed.getTotalPrice());
+        for (int i = 0; i < 50; i++){
+            /*seed = new Seed("Tulips");
+            System.out.println(seed.getTotalPrice());*/
+            Random random = new Random();
+            System.out.println(random.nextInt());
         }
 
     }

@@ -23,6 +23,7 @@
  */
 public class Main { // The Main class for initializing the whole program up until the end of the game
     public static void main(String[] args) {
+        new GUI();
         Player player = new Player(); // instantiate the player object with the Player class
         Lot tile = new Lot(); //  instantiate the tile object with the Lot of class.
         PurchaseTool orderTool; // a class-level variable for orderTool

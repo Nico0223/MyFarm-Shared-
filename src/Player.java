@@ -9,8 +9,8 @@ import java.util.*;
  * gameEnd which determines whether the game ends when the conditions are met.
  */
 public class Player {
-    private double objectCoins = 100; // default objectCoins are set to 100
-    private double experience = 0; // default experience is set to 0
+    private double objectCoins = 1000; // default objectCoins are set to 100
+    private double experience = 1000; // default experience is set to 0
     private Tools tool = null; // default tool being used is "none"
     private final Registration registration = new Registration(); // default registration is set to 0
     private String order; // the order of the farmer
@@ -79,6 +79,9 @@ public class Player {
         }
 
     }
+    public void setOrder(String order){
+        this.order = order;
+    }
 
     public String inputPlayer(){ // asks input from the user for their order
         if (this.gameEnd)
@@ -108,11 +111,14 @@ public class Player {
         ToolList orderList = new ToolList(); // Instantiate the orderList object with a ToolList class
         orderTool.initializeOrder(orderList, this.order);
 
-        if (this.objectCoins < orderTool.getCost()){ // an if-statement to indicate if the objectCoins is less than the cost of the selected tool
+        if (this.objectCoins < orderTool.getCost()){ // an if-statement to indicate if the objectCoins is less than the
+            // cost of the selected tool
+            new Prompt("Hah, you broke!!");
             System.out.println("Hah, you broke!!");
             return -1; 
         }
-        objectCoins = objectCoins - orderTool.getCost() + registration.getCostReduction(); // objectCoins gets subtracted to the cost of the orderTool
+        objectCoins = objectCoins - orderTool.getCost() + registration.getCostReduction(); // objectCoins gets
+        // subtracted to the cost of the orderTool
         experience = experience + orderTool.getExp(); // user gains experience based on the orderTool
         return 1;
     }
@@ -131,17 +137,22 @@ public class Player {
      */
     public void useTool(Lot tile){
         switch (this.tool.showTool()) {
-            case "Plow" -> tile.plowTile(); // If using the "Plow" tool, it would plow the tile
-            case "Watering Can" -> { // if using the "Watering Can" tool
+            case "Plow" -> {
+                if (tile.showState().equals("Unplowed"))
+                    tile.plowTile(); // If using the "Plow" tool, it would plow the tile
+                else
+                    this.experience -= 0.5;
+            }
+            case "Watering can" -> { // if using the "Watering Can" tool
                 if (tile.getCrop() == null){ // if no crop is currently planted in the tile
-                    System.out.println("Dude, plant the tile first!");
+                    System.out.println("Dude, plant the tile first!"); //legacy code for mco1
                 }
                 else // if a crop has been planted
                     tile.waterPlant();
             }
             case "Fertilizer" -> { //if using the "Fertilizer" tool
                 if (tile.getCrop() == null){ // if there is no plant in the current tile
-                    System.out.println("Dude, plant the tile first!");
+                    System.out.println("Dude, plant the tile first!"); //legacy code for mco1
                     this.objectCoins += 10; // refund process
                     this.experience -= 4; // refund process
                 }
@@ -168,6 +179,7 @@ public class Player {
         int i = purchaseSeed.initializeOrder(seedList, this.order); // the variable "i" gets the index of the seedList
         if (i != -1){ // if the index was found
             if (this.objectCoins < purchaseSeed.getCost()){
+                new Prompt("Hah, you broke!!");
                 System.out.println("Hah, you broke!!"); // if the objectCoins is less than the cost of the purchaseSeed
                 return -1;
             }
@@ -183,6 +195,7 @@ public class Player {
     public void sellHarvest(Lot tile) {
         double temp = tile.harvest(); // passes the value of the price of the harvested crop
         if (temp == 0){ // if temp is 0 or there is no value on the price of the harvested price
+            new Prompt("This plant is too young to harvest");
             System.out.println("This plant is too young to harvest");
             return;
         }
@@ -237,6 +250,22 @@ public class Player {
      */
     public int getLevel() {
         return this.registration.showLevel();
+    }
+
+    /** A getter method for the experience from this class
+     *
+     * @return the experience of the player
+     */
+    public double getExperience(){
+        return this.experience;
+    }
+
+    /** A getter method for the objectCoins from this class
+     *
+     * @return the objectCoin of the player
+     */
+    public double getObjectCoin(){
+        return this.objectCoins;
     }
 
     //Test code in Player class

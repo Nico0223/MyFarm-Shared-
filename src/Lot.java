@@ -8,11 +8,18 @@ public class Lot {
     private Seed crop = null;
     private double experience;
 
+
+    public void generateRock(boolean hasRock){
+        this.state = "Rock";
+    }
     /** A method that changes the state of the tile to plowed.
      */
     public void plowTile(){
-        if (this.state.equals("Unplowed"))
+        if (this.state.equals("Unplowed")){
             this.state = "Plowed";
+            System.out.println("hi");
+        }
+        System.out.println("hi");
     }
 
     /** A method that changes the state of the tile based on the seed the player planted.
@@ -34,8 +41,11 @@ public class Lot {
         crop.checkCondition(new SeedList()); 
         if (this.crop.showHarvestTime() == 0 && crop.isHarvestable()) // if the harvestTime is set to 0 and the crop is harvestable
             this.state = "Ready to harvest";
-        else if (this.crop.isWithered()) // if crop is now withered
+        else if (this.crop.isWithered()){// if crop is now withered
             this.state = "Withered";
+            this.crop = null;
+        }
+
         else
             this.state = this.crop.showName() + " - " + this.crop.showHarvestTime() + " days left"; // shows the state of the crop at the advancing day
     }
@@ -95,10 +105,6 @@ public class Lot {
             return total; // returns total objectCoins acquired
         }
 
-        if (this.state.equals("Withered")) // if the state of the tile is "withered"
-            System.out.println("Use the shovel to remove the withered plant"); // tells the user to use a shovel to remove the plant
-        else
-            System.out.println("If you see this, there is a bug in my pc");
         return 0;
     }
 

@@ -8,7 +8,7 @@ public class SeedList { // The class contains the list of seeds that the farmer/
     private final String[] seedName = {"Turnip", "Carrot", "Potato", "Rose", "Tulips", "Sunflower", "Mango", "Apple"};
     // properties of seeds that corresponds with the seedName array
     private final String[] cropType = {"Root crop", "Root crop", "Root crop", "Flower", "Flower", "Flower",
-                                       "Fruit tree", "Fruit tree"};
+                                       "Tree", "Tree"};
     private final int[] harvestTime = {2, 3, 5, 1, 2, 3, 10, 10};
     private final int[] waterNeeds = {1, 1, 3, 1, 2, 2, 7, 7};
     private final int[] waterBonus = {2, 2, 4, 2, 3, 3, 7, 7};
@@ -28,6 +28,10 @@ public class SeedList { // The class contains the list of seeds that the farmer/
                 return i;
         }
         return -1;
+    }
+
+    public String getSeedName(int index){
+        return this.seedName[index];
     }
     public String getCropType(int index){ // a getter for the crop type
         return this.cropType[index];
