@@ -1,6 +1,11 @@
+/*
+This class initializes the registration of the farmer on the farm lot. It contains information such as the type of farmer, level required, bonus earnings from crops, cost reduction from shops, water bonuses and fertilizer bonuse and all of which are depending on the current registration of the user. There is also a method for updating the registration, as well as restrictions and requirements for the user to buy the next registration.
+*/
+
+
 import java.util.Scanner;
 
-public class Registration { // initializes the registration of the farmer on the farm lot
+public class Registration { 
     private String farmerType = "Farmer"; // string variable for farmerType set to "Farmer"
     private int index = 0;
     private int level = 0;
@@ -49,20 +54,29 @@ public class Registration { // initializes the registration of the farmer on the
                 System.out.println("Not enough ObjectCoins to register");
             }
             else{ // if there is no violation on buying the farmer type
-                this.updateFarmer(farmerTypeList, request);
+                //this.updateFarmer(farmerTypeList, request);
                 return objectCoins - farmerTypeList.getRegistrationFee(this.index);
             }
         }
     }
-    public void updateFarmer(FarmerTypeList farmerTypeList, String request){
+    public double updateFarmer(double objectCoins, FarmerTypeList farmerTypeList, String request){
         // Lines 59-65, the effects of the farmer registration takes place on the farmer lot
         this.index = farmerTypeList.getIndexFarmerType(request);
-        this.farmerType = request;
-        this.bonusEarning = farmerTypeList.getBonusEarning(this.index);
-        this.costReduction = farmerTypeList.getCostReduction(this.index);
-        this.waterBonus = farmerTypeList.getWaterBonus(this.index);
-        this.fertilizerBonus = farmerTypeList.getFertilizerBonus(this.index);
-        System.out.println("Congratulation, You become a " + this.farmerType + "!!");
+        double cost = farmerTypeList.getRegistrationFee(this.index);
+        if (objectCoins >= cost){
+            this.farmerType = request;
+            this.bonusEarning = farmerTypeList.getBonusEarning(this.index);
+            this.costReduction = farmerTypeList.getCostReduction(this.index);
+            this.waterBonus = farmerTypeList.getWaterBonus(this.index);
+            this.fertilizerBonus = farmerTypeList.getFertilizerBonus(this.index);
+            new Prompt("Congratulation, You become a " + this.farmerType + "!!");
+            System.out.println("Congratulation, You become a " + this.farmerType + "!!");
+            return objectCoins - cost;
+        }
+        else{
+            new Prompt("Hah, you broke!!");
+            return 0;
+        }
     }
 
 

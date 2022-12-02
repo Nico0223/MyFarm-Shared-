@@ -1,4 +1,6 @@
-public class PurchaseTool { // This class initializes the player on purchasing the tool of their choice
+/** This class initializes the player on purchasing the tool of their choice. 
+*/
+public class PurchaseTool { 
     private double cost; // a variable for the cost of the tool
     private double experience; // a variable for the experience from buying the tool
 

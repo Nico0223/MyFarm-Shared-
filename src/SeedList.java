@@ -1,9 +1,10 @@
 import java.util.Random;
 
 /**
+// The class contains the list of seeds that the farmer/user can plant. Each seed has their own information in terms of harvesttime, water needs & bonuses, fertilizer needs & bonuses, minimum & maximum number of crops produced, seed cost/price, selling price as well as experience gained. These information are stored in forms of arrays. There is also a linear search for finding the seed name adnd getters for each information.
  *
  */
-public class SeedList { // The class contains the list of seeds that the farmer/user can plant
+public class SeedList { 
     // name of the seeds
     private final String[] seedName = {"Turnip", "Carrot", "Potato", "Rose", "Tulips", "Sunflower", "Mango", "Apple"};
     // properties of seeds that corresponds with the seedName array

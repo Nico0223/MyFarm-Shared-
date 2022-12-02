@@ -9,7 +9,7 @@ public class Lot {
     private double experience;
 
 
-    public void generateRock(boolean hasRock){
+    public void generateRock(){
         this.state = "Rock";
     }
     /** A method that changes the state of the tile to plowed.
@@ -78,6 +78,8 @@ public class Lot {
         //legacy code from MCO1
         /*if (this.state.equals("Unplowed")) // if the tile is already "unplowed"
             System.out.println("Bruh");*/
+        if (this.state.equals("Rock"))
+            return;
 
         this.state = "Unplowed"; // state of the plow is now "unplowed"
         this.crop = null; // removes a crop from the tile
@@ -121,7 +123,7 @@ public class Lot {
      *
      * @return the state of the tile
      */
-    public String showState(){
+    public String showState(){ 
         return this.state;
     }
 

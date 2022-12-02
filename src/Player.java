@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class Player {
     private double objectCoins = 1000; // default objectCoins are set to 100
-    private double experience = 1000; // default experience is set to 0
+    private double experience = 10000; // default experience is set to 0
     private Tools tool = null; // default tool being used is "none"
     private final Registration registration = new Registration(); // default registration is set to 0
     private String order; // the order of the farmer
@@ -117,7 +117,7 @@ public class Player {
             System.out.println("Hah, you broke!!");
             return -1; 
         }
-        objectCoins = objectCoins - orderTool.getCost() + registration.getCostReduction(); // objectCoins gets
+         objectCoins = objectCoins - orderTool.getCost(); // objectCoins gets
         // subtracted to the cost of the orderTool
         experience = experience + orderTool.getExp(); // user gains experience based on the orderTool
         return 1;
@@ -176,7 +176,7 @@ public class Player {
      */
     public int buySeed(PurchaseSeed purchaseSeed)  {
         SeedList seedList = new SeedList(); // initialize the seedList object with the SeedList class
-        int i = purchaseSeed.initializeOrder(seedList, this.order); // the variable "i" gets the index of the seedList
+        int i = purchaseSeed.initializeOrder(seedList, this.registration, this.order); // the variable "i" gets the index of the seedList
         if (i != -1){ // if the index was found
             if (this.objectCoins < purchaseSeed.getCost()){
                 new Prompt("Hah, you broke!!");
@@ -209,7 +209,7 @@ public class Player {
      *
      */
     public void register(){ //
-        this.objectCoins = this.registration.initializeRegistration(new FarmerTypeList(), this.objectCoins);
+        this.objectCoins = this.registration.updateFarmer(objectCoins, new FarmerTypeList(), order);
     }
 
     /** A getter method for the waterBonus from the registration object.
@@ -266,6 +266,10 @@ public class Player {
      */
     public double getObjectCoin(){
         return this.objectCoins;
+    }
+
+     public Registration getRegistration(){
+        return this.registration;
     }
 
     //Test code in Player class

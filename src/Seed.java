@@ -72,8 +72,9 @@ public class Seed {
      * @param player the player object composed of the registration object
      */
     public void addBonus(Player player){
-      this.waterBonus += player.getWaterBonus();
-      this.fertilizerBonus += player.getFertilizerBonus();
+      SeedList seedlist = new SeedList();
+      this.waterBonus = seedlist.getWaterBonus(this.seedIndex) + player.getWaterBonus();
+      this.fertilizerBonus = seedlist.getFertilizerBonus(this.seedIndex) + player.getFertilizerBonus();
       this.farmerTypeEarningBonus = player.getBonusEarning();
     }
 
@@ -135,9 +136,9 @@ public class Seed {
         int waterNeeds = seedList.getWaterNeeds(this.seedIndex);
         String string = "Times watered: " + this.numWatered + "/" + waterNeeds;
         if (this.numWatered >= waterNeeds){
-            if (this.numWatered == waterNeeds)
+            if (this.numWatered < this.waterBonus)
                 return string.concat(" :)");
-            else
+            else if (this.numWatered == this.waterBonus)
                 return string.concat("*");
         }
         return string;
@@ -154,9 +155,9 @@ public class Seed {
         int fertilizerNeeds = seedList.getFertilizerNeeds(this.seedIndex);
         String string = "Times fertilized: " + this.numFertilized + "/" + fertilizerNeeds;
         if (this.numFertilized >= fertilizerNeeds){
-            if (this.numFertilized == fertilizerNeeds)
+            if (this.numFertilized < this.fertilizerBonus)
                 return string.concat(" :)");
-            else
+            else if (this.numFertilized == this.fertilizerBonus)
                 return string.concat("*");
         }
         return  string;
