@@ -11,11 +11,11 @@ import java.util.Scanner;
 
 
 public class GUI {
-    Color bgcolor = new Color(99, 189, 64);
-    private JFrame mainFrame = new JFrame("MyFarm");
+    Color bgColor = new Color(99, 189, 64);
+    private final JFrame mainFrame = new JFrame("MyFarm");
     private JDialog seedShop;
     private Player player = new Player();
-    private Lot tile[][] = new Lot[5][10];
+    private final Lot[][] tile = new Lot[5][10];
     private int day = 1;
 
     private JLabel farmType;
@@ -26,7 +26,7 @@ public class GUI {
     private JButton[][] bTile = new JButton[5][10];
     private int tileX;
     private int tileY;
-    private boolean[] isRock = new boolean[50];
+    private final boolean[] isRock = new boolean[50];
 
     private JLabel cropStat;
     private JLabel waterStat;
@@ -43,7 +43,7 @@ public class GUI {
     private final Border defaultBr = new JButton().getBorder();
 
     public GUI (){
-        this.mainFrame.getContentPane().setBackground(bgcolor);
+        this.mainFrame.getContentPane().setBackground(bgColor);
         this.mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.mainFrame.setLayout(new FlowLayout(FlowLayout.CENTER,1000,30));
         this.mainFrame.setSize(700, 500);     
@@ -58,12 +58,12 @@ public class GUI {
         panel.setBackground(new Color(211, 131, 58));
         farmType = new JLabel();
         farmType.setText(player.getFarmerType());
-        objCoins = new JLabel("ObjectCoins: " + String.valueOf(player.getObjectCoin()));
+        objCoins = new JLabel("ObjectCoins: " + player.getObjectCoin());
         nDays = new JLabel("Days: " + day);
         panel.add(farmType, BorderLayout.WEST);
         panel.add(objCoins, BorderLayout.WEST);
-        level = new JLabel("Lv. " + String.valueOf(player.getLevel()) + " " + 
-                           String.valueOf(player.getExperience() % 100) + " / 100");
+        level = new JLabel("Lv. " + player.getLevel() + " " +
+                player.getExperience() % 100 + " / 100");
         panel.add(level, BorderLayout.SOUTH);
         panel.add(nDays, BorderLayout.SOUTH);
 
@@ -366,6 +366,8 @@ public class GUI {
                             day = 1;
                             nDays.setText("Days: " + day);
                         }
+                        else
+                            System.exit(0);
                     }
               }
               else if (button.getText().equals("Close")){
@@ -405,9 +407,9 @@ public class GUI {
     }
 
   public void updateInterface(){
-      objCoins.setText("ObjectCoins: " + String.valueOf(player.getObjectCoin()));
-      level.setText("Lv. " + String.valueOf(player.getLevel()) + " " +
-                     String.valueOf(player.getExperience() % 100) + " / 100");
+      objCoins.setText("ObjectCoins: " + player.getObjectCoin());
+      level.setText("Lv. " + player.getLevel() + " " +
+              player.getExperience() % 100 + " / 100");
   }
   
   public void seedShop(){
@@ -520,7 +522,8 @@ public class GUI {
             }
             scanner.close();
         }catch (Exception e){
-            System.out.println(e);
+            new Prompt(e.getMessage());
+            System.out.println(e.getMessage());
         }
     }
 

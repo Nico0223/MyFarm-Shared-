@@ -9,7 +9,7 @@ import java.util.*;
  * gameEnd which determines whether the game ends when the conditions are met.
  */
 public class Player {
-    private double objectCoins = 1000; // default objectCoins are set to 100
+    private double objectCoins = 100; // default objectCoins are set to 100
     private double experience = 10000; // default experience is set to 0
     private Tools tool = null; // default tool being used is "none"
     private final Registration registration = new Registration(); // default registration is set to 0
@@ -58,8 +58,6 @@ public class Player {
     }
 
     // showing interface for MCO1
-    private boolean flag = true;
-    private Seed seed = new Seed("Turnip");
 	public void displayInterface(Lot tile){ //this method displays the farm information in terms of objectCoins, experience and Registration level and the farm tiles.
         System.out.println("ObjectCoins: " + this.objectCoins);
         System.out.println("Experience: " + this.experience);
@@ -73,16 +71,19 @@ public class Player {
         if (tile.getCrop() != null){ // if there is a crop on the tile
             tile.updateBonus(this); // adds bonus to the tile
         }
-        if (flag){
-            tile.plantSeed(seed);
-            flag = false;
-        }
-
     }
+
+    /**
+     * This method sets the input from the GUI to the player object in order to initiate the purchases of the tools and
+     * seeds
+     *
+     * @param order the input from the GUI
+     */
     public void setOrder(String order){
         this.order = order;
     }
 
+    // Legacy codes from MCO1
     public String inputPlayer(){ // asks input from the user for their order
         if (this.gameEnd)
             return "Forfeit";
@@ -159,9 +160,8 @@ public class Player {
                else
                     tile.fertilizePlant(); // tile gets fertilized
             }
-            case "Pickaxe" -> { // If using the "Pickaxe" tool
-               tile.mineRock();
-            }
+            case "Pickaxe" -> // If using the "Pickaxe" tool
+                    tile.mineRock();
             case "Shovel" -> tile.shovelTile(); // If using the "Shovel" tool
             default -> System.out.println("What the hell is this?!\n"); //legacy line of code from MCO1
         }
@@ -268,6 +268,10 @@ public class Player {
         return this.objectCoins;
     }
 
+    /** A getter method for the current level of registration from this class
+     *
+     * @return the current level of registration of the player
+     */
      public Registration getRegistration(){
         return this.registration;
     }

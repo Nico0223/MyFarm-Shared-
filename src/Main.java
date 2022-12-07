@@ -21,6 +21,10 @@
  * @version     %I%, %G%
  * @since       1.0
  */
+
+/** The main class loads the GUI and shows the legacy code of the prototyped version of MyFarm Simulator which is
+ * only shown in the console or command prompt.
+ */
 public class Main { // The Main class for initializing the whole program up until the end of the game
     public static void main(String[] args) {
         new GUI();

@@ -1,6 +1,8 @@
 /**
-// This class initializes on the list of tools that the user can use for the farm lot. Similar to the SeedList class, information on the tools are in a form of arrays and they are the lists of tools, cost of the tools, and experienced gained from buying the tool. There is also a linear search for finding the tool and getters for each information
-*/
+ * This class initializes on the list of tools that the user can use for the farm lot. Similar to the SeedList class,
+ * information on the tools are in a form of arrays, and they are the lists of tools, cost of the tools, and experiences
+ * gained from buying the tool. There is also a linear search for finding the tool and getters for each information
+ */
 
 public class ToolList { 
     private final String[] toolList = {"Plow", "Watering can", "Fertilizer", "Pickaxe", "Shovel"}; // array strings for the list of tools
@@ -15,9 +17,22 @@ public class ToolList {
         return -1;
     }
 
+    /**
+     * This getter method returns the cost of the selected tool
+     *
+     * @param index the index of the selected tool
+     * @return the cost of the selected tool
+     */
     public double costIndex(int index){ // gets the index on the cost of the tool
         return costList[index];
     }
+
+    /**
+     * This getter method returns the experiences gained from using the selected tool
+     *
+     * @param index the index of the selected tool
+     * @return the experiences gained from using the selected tool
+     */
     public double expIndex(int index){ // gets the index on the experience gained from the tool
         return experienceList[index];
     }

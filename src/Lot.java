@@ -8,10 +8,14 @@ public class Lot {
     private Seed crop = null;
     private double experience;
 
-
+    /**
+     * A method that sets the state of this tile to "Rock" which prevents the player from planting. It requires the
+     * pickaxe to revert the tile to unplowed
+     */
     public void generateRock(){
         this.state = "Rock";
     }
+
     /** A method that changes the state of the tile to plowed.
      */
     public void plowTile(){

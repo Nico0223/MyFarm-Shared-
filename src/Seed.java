@@ -53,6 +53,11 @@ public class Seed {
         return this.seedName;
     }
 
+    /**
+     * A method that shows the crop type
+     *
+     * @return the crop type
+     */
     public String showType(){
         return this.cropType;
     }

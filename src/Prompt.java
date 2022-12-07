@@ -1,22 +1,20 @@
 import javax.swing.*;
 /**
-This class represents the gameover mechanism whenever the player has failed the game on the farm simulaion. It will be in a form of a pop-up window from the output screen.
+* The Prompt class forms the pop-up window that alerts the player about the important information such as
+ * successful harvest and failure of purchase.
 */
 public class Prompt {
     JFrame frame = new JFrame();
-    public Prompt(String message){ // constructor
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JOptionPane.showMessageDialog(frame,message,"Message",JOptionPane.PLAIN_MESSAGE);
-        frame.dispose();
-    }
- /** This method initializes the pop-up window when the player loses the farm game simulation. 
+
+    /**
+     * Creates the pop-up prompt message by getting the input of string of messages from other objects and destroys
+     * itself to save memory
      *
-     * @param set, setting the game status
+     * @param message the message to be inserted into the prompt window
      */
-    public Prompt(int set){
+    public Prompt(String message) { // constructor
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        int a = JOptionPane.showConfirmDialog(frame, "Congratulations, you lost the game!","Message",
-                JOptionPane.YES_NO_OPTION,JOptionPane.PLAIN_MESSAGE);
+        JOptionPane.showMessageDialog(frame, message, "Message", JOptionPane.PLAIN_MESSAGE);
         frame.dispose();
     }
 }
